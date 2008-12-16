@@ -4,7 +4,6 @@ class InkScrape {
   // create an pseudo-anonymous function
   protected static function create_ref_function($args, $body) {
     static $n = 0;
-    $args = '&$_self, '.$args;
     $functionName = sprintf('ref_lambda_%d',++$n);
     $declaration = sprintf('function %s(%s) {%s}',$functionName,$args,$body);
     var_dump($declaration);
@@ -25,7 +24,7 @@ class InkScrape {
     return true;
   }
 
-  protected static function strpos_andMoveReadHead(&$pos, $haystack, $needle) {
+  public static function _strpos_andMoveReadHead(&$pos, $haystack, $needle) {
     $new_pos = strpos($haystack, $needle, $pos);
     if($new_pos===false) {
       return false;
@@ -35,11 +34,11 @@ class InkScrape {
   }
 
   public static function checkFormatAndMoveReadHead(&$pos, $string, $assert_chain) {
-    $args = array(InkScrape, &$pos, $string);
+    $args = array(&$pos, $string);
     $args_str = '$pos, $string';
     $evald_chain = array();
     for($i=0;$i<count($assert_chain);$i++) {
-      array_push($evald_chain, self::create_ref_function($args_str, 'return $_self::strpos_andMoveReadHead(&$pos, $string, \''.$assert_chain[$i].'\');'));
+      array_push($evald_chain, self::create_ref_function($args_str, 'return InkScrape::_strpos_andMoveReadHead(&$pos, $string, \''.$assert_chain[$i].'\');'));
     }
     if(!self::assert_chain(create_function('$ret, '.$args_str, 'return $ret!==false;'), $evald_chain, $args)) {
       throw new Exception("unrecognized page format");
