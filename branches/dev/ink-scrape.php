@@ -1,5 +1,9 @@
 <?php
 
+include("base/Asserter.php");
+include("base/Predicate.php");
+include("base/Condition.php");
+
 class InkScrape {
   // create an pseudo-anonymous function
   protected static function create_ref_function($args, $body) {
@@ -24,7 +28,7 @@ class InkScrape {
     return true;
   }
 
-  public static function _strpos_andMoveReadHead(&$pos, $haystack, $needle) {
+  protected static function _strpos_andMoveReadHead(&$pos, $haystack, $needle) {
     $new_pos = strpos($haystack, $needle, $pos);
     if($new_pos===false) {
       return false;
@@ -34,15 +38,36 @@ class InkScrape {
   }
 
   public static function checkFormatAndMoveReadHead(&$pos, $string, $assert_chain) {
-    $args = array(&$pos, $string);
-    $args_str = '$pos, $string';
-    $evald_chain = array();
-    for($i=0;$i<count($assert_chain);$i++) {
-      array_push($evald_chain, self::create_ref_function($args_str, 'return InkScrape::_strpos_andMoveReadHead(&$pos, $string, \''.$assert_chain[$i].'\');'));
+    $a = new Asserter();
+    foreach($assert_chain as $p_str) {
+      $a->addCase(new FindStringPredicate($pos, $p_str, $string), new FoundStringCondition());
     }
-    if(!self::assert_chain(create_function('$ret, '.$args_str, 'return $ret!==false;'), $evald_chain, $args)) {
-      throw new Exception("unrecognized page format");
-    }
+    $pass = $a->evaluateAllCases();
+    if(!$pass) throw new Exception("unrecognized page format");
+  }
+}
+
+class FindStringPredicate implements IPredicate {
+  public $pos;
+  public $needle;
+  public $haystack;
+
+  public function __construct($pos, $needle, $haystack) {
+    $this->pos = $pos;
+    $this->needle = $needle;
+    $this->haystack = $haystack;
+  }
+
+  public function invoke() {
+    $ret = strpos($this->haystack, $this->needle, $this->pos);
+
+    return $ret;
+  }
+}
+
+class FoundStringCondition implements ICondition {
+  public function evaluate($value) {
+    return $value!==false;;
   }
 }
 
