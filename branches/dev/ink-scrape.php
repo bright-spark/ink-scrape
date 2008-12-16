@@ -5,8 +5,20 @@ include("base/Predicate.php");
 include("base/Condition.php");
 
 class InkScrape {
+  private static $pos;
+
+  public static function findStringAssertPassedCallback() {
+    echo("passed\n");
+  }
+
+  public static function findStringAssertFailedCallback() {
+    echo("failed\n");
+  }
+
   public static function checkFormatAndMoveReadHead(&$pos, $string, $assert_chain) {
     $a = new Asserter();
+    $a->setAssertPassedCallback(array('InkScraper', 'findStringAssertPassedCallback'));
+    $a->setAssertFailedCallback(array('InkScraper', 'findStringAssertFailedCallback'));
     foreach($assert_chain as $p_str) {
       $a->addCase(new FindStringPredicate($pos, $p_str, $string), new FoundStringCondition());
     }
