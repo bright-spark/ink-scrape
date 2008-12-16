@@ -17,8 +17,8 @@ class InkScrape {
 
   public static function checkFormatAndMoveReadHead(&$pos, $string, $assert_chain) {
     $a = new Asserter();
-    $a->setAssertPassedCallback(array('InkScraper', 'findStringAssertPassedCallback'));
-    $a->setAssertFailedCallback(array('InkScraper', 'findStringAssertFailedCallback'));
+    $a->setAssertPassedCallback(array('InkScrape', 'findStringAssertPassedCallback'));
+    $a->setAssertFailedCallback(array('InkScrape', 'findStringAssertFailedCallback'));
     foreach($assert_chain as $p_str) {
       $a->addCase(new FindStringPredicate($pos, $p_str, $string), new FoundStringCondition());
     }
