@@ -5,38 +5,6 @@ include("base/Predicate.php");
 include("base/Condition.php");
 
 class InkScrape {
-  // create an pseudo-anonymous function
-  protected static function create_ref_function($args, $body) {
-    static $n = 0;
-    $functionName = sprintf('ref_lambda_%d',++$n);
-    $declaration = sprintf('function %s(%s) {%s}',$functionName,$args,$body);
-    var_dump($declaration);
-    eval($declaration);
-
-    return $functionName;
-  }
-
-  protected static function assert_chain($assert, $chain, $args) {
-    foreach($chain as $link) {
-      $ret = call_user_func_array($link, $args);
-      $ret_a = call_user_func_array($assert, array_merge(array($ret), $args));
-      if(!$ret_a) {
-        echo("assert failed: $ret\n");
-        return false;
-      }
-    }
-    return true;
-  }
-
-  protected static function _strpos_andMoveReadHead(&$pos, $haystack, $needle) {
-    $new_pos = strpos($haystack, $needle, $pos);
-    if($new_pos===false) {
-      return false;
-    } else {
-      $pos = $new_pos+strlen($needle);
-    }
-  }
-
   public static function checkFormatAndMoveReadHead(&$pos, $string, $assert_chain) {
     $a = new Asserter();
     foreach($assert_chain as $p_str) {
