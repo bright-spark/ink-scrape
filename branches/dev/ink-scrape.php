@@ -6,13 +6,17 @@ include("base/Condition.php");
 
 class InkScrape {
   private static $pos;
+  private static $new_pos;
+
+  public static function predicateCallback($pos) {
+    self::$new_pos = $pos;
+  }
 
   public static function findStringAssertPassedCallback() {
-    echo("passed\n");
+    self::$pos = self::$new_pos;
   }
 
   public static function findStringAssertFailedCallback() {
-    echo("failed\n");
   }
 
   public static function checkFormatAndMoveReadHead(&$pos, $string, $assert_chain) {
@@ -40,6 +44,7 @@ class FindStringPredicate implements IPredicate {
 
   public function invoke() {
     $ret = strpos($this->haystack, $this->needle, $this->pos);
+    InkScrape::predicateCallback($ret);
 
     return $ret;
   }
