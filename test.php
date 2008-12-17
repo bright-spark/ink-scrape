@@ -81,7 +81,7 @@ echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text)\n");
 
 /**
  * Test locate-bounded-text-front
- * - test ability to locate text with front and back boundaries
+ * - test ability to locate text with front boundaries
  */
 $pos = 0;
 $matched = false;
@@ -103,7 +103,7 @@ echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-front-arbitrar
 
 /**
  * Test locate-bounded-text-back
- * - test ability to locate text with front and back boundaries
+ * - test ability to locate text with back boundaries
  */
 $pos = 0;
 $matched = false;
