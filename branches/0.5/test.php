@@ -35,6 +35,23 @@ try {
 echo(($threw ? 'passed' : 'failed')." test (locate-text-forward)\n");
 
 /**
+ * Test locate-text-backward
+ * - test ability to locate text, in specified order
+ * - the third string comes after the second string, so this case should fail if the search head isn't moving backwards
+ */
+$threw = false;
+try {
+  InkScrape::checkBackBoundariesForText(array(
+  'Suspendisse',
+  'Vestibulum',
+  'Etiam'), $string);
+} catch (UnmatchedBoundaryException $e) {
+  $threw = true;
+}
+
+echo(($threw ? 'passed' : 'failed')." test (locate-text-backward)\n");
+
+/**
  * Test locate-text-nonoverlap
  * - test ability to locate text, in specified order, with no overlapping of boundaries
  * - third string starts at the same position as the second string, so this case should fail if position isn't moved beyond previous successful matched boundary
