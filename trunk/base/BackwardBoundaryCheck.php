@@ -13,6 +13,7 @@ class BackwardBoundaryCheck extends SimpleBoundaryChecker implements IBoundaryCh
 
   protected function validateParameters() {
     parent::validateParameters();
+    $this->m_boundaries = array_reverse($this->m_boundaries);
     $this->m_pos = empty($this->m_pos) ? strlen($this->m_data) : $this->m_pos;
   }
 
