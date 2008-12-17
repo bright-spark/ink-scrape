@@ -28,6 +28,12 @@ class SimpleBoundaryChecker {
   public function setPosition($position) {
     $this->pos = $position;
   }
+
+  protected function validateParameters() {
+    if(empty($this->m_boundaries))	throw new InvalidArgumentException("expected non-empty array");
+    if(empty($this->m_data))	throw new InvalidArgumentException("expected non-empty string");
+    if(empty($this->m_pos) && $this->m_pos!==0) $this->m_pos = 0;
+  }
 }
 
 ?>
