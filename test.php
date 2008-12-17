@@ -91,6 +91,17 @@ if(InkScrape::textWithFrontBoundaries(array('Lorem','Etiam','Suspendisse','tinci
 echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-front)\n");
 
 /**
+ * Test locate-bounded-text-front-arbitrary
+ * - test ability to locate text with front boundaries, starting from an arbitrary position
+ */
+$pos = strpos($string, "laoreet ")+strlen("laoreet ");
+$matched = false;
+if(InkScrape::textWithFrontBoundaries(array('quam'), $string, $pos) == " vel metus. Suspendisse eu risus id justo tincidunt auctor.") {
+  $matched = true;
+}
+echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-front-arbitrary)\n");
+
+/**
  * Test locate-bounded-text-back
  * - test ability to locate text with front and back boundaries
  */
@@ -100,5 +111,16 @@ if(InkScrape::textWithBackBoundaries(array('Suspendisse','Etiam','consectetur','
   $matched = true;
 }
 echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-back)\n");
+
+/**
+ * Test locate-bounded-text-back-arbitrary
+ * - test ability to locate text with back boundaries, starting from an arbitrary position
+ */
+$pos = strpos($string, ", pellentesque")+strlen(", pellentesque");
+$matched = false;
+if(InkScrape::textWithbackBoundaries(array('quam'), $string, $pos) == "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tortor ") {
+  $matched = true;
+}
+echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-back-arbitrary)\n");
 
 ?>
