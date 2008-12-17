@@ -21,10 +21,8 @@ try {
   'foo',
   'gaz',
   'bar'), $string);
-} catch (Exception $e) {
-  if($e->getMessage()=="unrecognized page format") {
-    $threw = true;
-  }
+} catch (UnmatchedBoundaryException $e) {
+  $threw = true;
 }
 
 echo(($threw ? 'passed' : 'failed')." test\n");

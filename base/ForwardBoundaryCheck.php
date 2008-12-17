@@ -2,6 +2,7 @@
 
 require_once("IBoundaryChecker.php");
 require_once("SimpleBoundaryChecker.php");
+require_once("UnmatchedBoundaryException.php");
 
 class ForwardBoundaryCheck extends SimpleBoundaryChecker implements IBoundaryChecker {
   public function __construct($boundaries=array(/*string*/), $data='', $pos=0) {
@@ -16,7 +17,7 @@ class ForwardBoundaryCheck extends SimpleBoundaryChecker implements IBoundaryChe
       if($pos_new!==false) {
         $this->m_pos = $pos_new;
       } else {
-        throw new Exception("unrecognized page format");
+        throw new UnmatchedBoundaryException($boundary, $this->m_data);
       }
     }
   }
