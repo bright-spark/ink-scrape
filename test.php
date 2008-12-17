@@ -79,4 +79,26 @@ if(InkScrape::boundedText(array('Lorem','consectetur','tortor'), array('Suspendi
 }
 echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text)\n");
 
+/**
+ * Test locate-bounded-text-front
+ * - test ability to locate text with front and back boundaries
+ */
+$pos = 0;
+$matched = false;
+if(InkScrape::textWithFrontBoundaries(array('Lorem','Etiam','Suspendisse','tincidunt'), $string) == " auctor.") {
+  $matched = true;
+}
+echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-front)\n");
+
+/**
+ * Test locate-bounded-text-back
+ * - test ability to locate text with front and back boundaries
+ */
+$pos = 0;
+$matched = false;
+if(InkScrape::textWithBackBoundaries(array('Suspendisse','Etiam','consectetur','ipsum'), $string) == "Lorem ") {
+  $matched = true;
+}
+echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-back)\n");
+
 ?>
