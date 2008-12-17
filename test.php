@@ -58,7 +58,6 @@ echo((($threw && ($e->matchCount() == 2)) ? 'passed' : 'failed')." test (locate-
  */
 $threw = false;
 try {
-  $pos = 0;
   InkScrape::checkFrontBoundariesForText(array(
   'Lorem',
   'Suspendisse',
