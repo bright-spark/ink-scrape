@@ -32,7 +32,7 @@ try {
   $threw = true;
 }
 
-echo(($threw ? 'passed' : 'failed')." test (locate-text-forward)\n");
+echo((($threw && ($e->matchCount() == 2)) ? 'passed' : 'failed')." test (locate-text-forward)\n");
 
 /**
  * Test locate-text-backward
@@ -49,7 +49,7 @@ try {
   $threw = true;
 }
 
-echo(($threw ? 'passed' : 'failed')." test (locate-text-backward)\n");
+echo((($threw && ($e->matchCount() == 2)) ? 'passed' : 'failed')." test (locate-text-backward)\n");
 
 /**
  * Test locate-text-nonoverlap
@@ -68,6 +68,6 @@ try {
   $threw = true;
 }
 
-echo(($threw ? 'passed' : 'failed')." test (locate-text-nonoverlap)\n");
+echo((($threw && ($e->matchCount() == 2)) ? 'passed' : 'failed')." test (locate-text-nonoverlap)\n");
 
 ?>
