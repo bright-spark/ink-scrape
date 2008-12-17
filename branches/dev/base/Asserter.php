@@ -23,9 +23,10 @@ class Asserter {
       if(!$c->evaluate($val)) {
         call_user_func($this->assertFailedCallback);
         return false;
+      } else {
+        call_user_func($this->assertPassedCallback);
       }
     }
-    call_user_func($this->assertPassedCallback);
     return true;
   }
 
