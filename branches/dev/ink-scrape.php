@@ -41,7 +41,7 @@ class InkScrape {
     $a->setAssertPassedCallback(array($this, 'findStringAssertPassedCallback'));
     $a->setAssertFailedCallback(array($this, 'findStringAssertFailedCallback'));
     foreach($this->rules as $p_str) {
-      $a->addCase(new FindStringPredicate($this, &$this->pos, $p_str, $this->text), new FoundStringCondition());
+      $a->addCase(new FindStringPredicate($this, $p_str, $this->text), new FoundStringCondition());
     }
     $pass = $a->evaluateAllCases();
     if(!$pass) throw new Exception("unrecognized page format");
@@ -50,20 +50,18 @@ class InkScrape {
 
 class FindStringPredicate implements IPredicate {
   public $inst;
-  public $pos;
   public $needle;
   public $haystack;
 
-  public function __construct($inst, $pos, $needle, $haystack) {
-    $this->inst =& $inst;
-    $this->pos =& $pos;
+  public function __construct(&$inst, $needle, $haystack) {
+    $this->inst = $inst;
     $this->needle = $needle;
     $this->haystack = $haystack;
   }
 
   public function invoke() {
     $inst = $this->inst;
-    $ret = strpos($this->haystack, $this->needle, $this->pos);
+    $ret = strpos($this->haystack, $this->needle, $inst->currentPosition());
     $inst->setNewPos($ret);
 
     return $ret;
