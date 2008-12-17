@@ -11,7 +11,7 @@ InkScrape::checkTextFormat(0, array(
 'foo',
 'bar',
 'gaz'), $string);
-echo("passed test\n");
+echo("Test #1: passed test\n");
 
 //Test #2: test ability to locate text, in specified order.
 // the third string comes before the second string, so this case should fail if position is stored
@@ -25,6 +25,6 @@ try {
   $threw = true;
 }
 
-echo(($threw ? 'passed' : 'failed')." test\n");
+echo("Test #2: ".($threw ? 'passed' : 'failed')." test\n");
 
 ?>
