@@ -7,18 +7,20 @@ include("ink-scrape.php");
 $string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tortor quam, pellentesque at, blandit id, consequat malesuada, lectus. Etiam laoreet quam vel metus. Suspendisse eu risus id justo tincidunt auctor.";
 
 /**
- * Test #1: test ability to locate text (not necessarily in any order).
+ * Test locate-text-general
+ * - test ability to locate text (not necessarily in any order)
  */
 $pos = 0;
 InkScrape::checkTextFormat(0, array(
 'Lorem',
 'Vestibulum',
 'Etiam'), $string);
-echo("Test #1: passed test\n");
+echo("passed test (locate-text-general)\n");
 
 /**
- * Test #2: test ability to locate text, in specified order.
- * the third string comes before the second string, so this case should fail if position is stored
+ * Test locate-text-forward
+ * - test ability to locate text, in specified order
+ * - the third string comes before the second string, so this case should fail if position is stored
  */
 $threw = false;
 try {
@@ -30,10 +32,11 @@ try {
   $threw = true;
 }
 
-echo("Test #2: ".($threw ? 'passed' : 'failed')." test\n");
+echo(($threw ? 'passed' : 'failed')." test (locate-text-forward)\n");
 
 /**
- * Test #3: test ability to locate text, in specified order, with no overlapping of boundaries.
+ * Test locate-text-nonoverlap
+ * - test ability to locate text, in specified order, with no overlapping of boundaries
  */
 $threw = false;
 try {
@@ -47,6 +50,6 @@ try {
   $threw = true;
 }
 
-echo("Test #2: ".($threw ? 'passed' : 'failed')." test\n");
+echo(($threw ? 'passed' : 'failed')." test (locate-text-nonoverlap)\n");
 
 ?>
