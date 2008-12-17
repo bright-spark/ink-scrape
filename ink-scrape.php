@@ -5,31 +5,43 @@ include("base/Predicate.php");
 include("base/Condition.php");
 
 class InkScrape {
-  private static $pos;
-  private static $new_pos;
+  private $pos;
+  private $rules;
+  private $text;
 
-  public static function currentPos() {
-    return self::$pos;
+  private $new_pos;
+
+  public function __construct($pos=0, $rules=array(), $text="") {
+    $this->pos = $pos;
+    $this->rules = $rules;
+    $this->text = $text;
   }
 
-  public static function setNewPos($pos) {
-    self::$new_pos = $pos;
+  public function currentPosition() {
+    return $this->pos;
   }
 
-  public static function findStringAssertPassedCallback() {
-    self::$pos = self::$new_pos;
+  public function text() {
+    return $this->text;
   }
 
-  public static function findStringAssertFailedCallback() {
+  public function setNewPos($pos) {
+    $this->new_pos = $pos;
   }
 
-  public static function checkFormatAndMoveReadHead(&$pos, $string, $assert_chain) {
-    self::$pos = $pos;
+  public function findStringAssertPassedCallback() {
+    $this->pos = $this->new_pos;
+  }
+
+  public function findStringAssertFailedCallback() {
+  }
+
+  public function checkTextFormat() {
     $a = new Asserter();
-    $a->setAssertPassedCallback(array('InkScrape', 'findStringAssertPassedCallback'));
-    $a->setAssertFailedCallback(array('InkScrape', 'findStringAssertFailedCallback'));
-    foreach($assert_chain as $p_str) {
-      $a->addCase(new FindStringPredicate(self::$pos, $p_str, $string), new FoundStringCondition());
+    $a->setAssertPassedCallback(array($this, 'findStringAssertPassedCallback'));
+    $a->setAssertFailedCallback(array($this, 'findStringAssertFailedCallback'));
+    foreach($this->rules as $p_str) {
+      $a->addCase(new FindStringPredicate($this, $p_str, $this->text), new FoundStringCondition());
     }
     $pass = $a->evaluateAllCases();
     if(!$pass) throw new Exception("unrecognized page format");
@@ -37,19 +49,20 @@ class InkScrape {
 }
 
 class FindStringPredicate implements IPredicate {
-  public $pos;
+  public $inst;
   public $needle;
   public $haystack;
 
-  public function __construct($pos, $needle, $haystack) {
-    $this->pos = $pos;
+  public function __construct(&$inst, $needle, $haystack) {
+    $this->inst = $inst;
     $this->needle = $needle;
     $this->haystack = $haystack;
   }
 
   public function invoke() {
-    $ret = strpos($this->haystack, $this->needle, InkScrape::currentPos());
-    InkScrape::setNewPos($ret);
+    $inst = $this->inst;
+    $ret = strpos($this->haystack, $this->needle, $inst->currentPosition());
+    $inst->setNewPos($ret);
 
     return $ret;
   }
