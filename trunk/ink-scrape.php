@@ -15,6 +15,14 @@ class InkScrape {
     $bbc->check();
     return $bbc;
   }
+
+  public static function boundedText($front, $back, $text, $pos=null) {
+    $fbc = self::checkFrontBoundariesForText($front, $text, $pos);
+    $pos2 = $fbc->currentPosition();
+    $text2 = substr($text, $pos2);
+    $bbc = self::checkBackBoundariesForText($back, $text2);
+    return substr($text, $fbc->currentPosition(), $bbc->currentPosition());
+  }
 }
 
 ?>
