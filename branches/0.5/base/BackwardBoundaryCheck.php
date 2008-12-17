@@ -12,8 +12,10 @@ class BackwardBoundaryCheck extends SimpleBoundaryChecker implements IBoundaryCh
   }
 
   public function check() {
+    $this->m_pos = empty($this->m_pos) ? strlen($this->m_data) : $this->m_pos;
     foreach($this->m_boundaries as $boundary) {
-      $pos_new = strrpos($this->m_data, $boundary, $this->m_pos);
+      $haystack = substr($this->m_data, 0, $this->m_pos);
+      $pos_new = strrpos($haystack, $boundary);
       if($pos_new!==false) {
         $this->m_pos = $pos_new;
       } else {
