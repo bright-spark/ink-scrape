@@ -27,4 +27,19 @@ try {
 
 echo("Test #2: ".($threw ? 'passed' : 'failed')." test\n");
 
+//Test #3: test ability to locate text, in specified order, with no overlapping of boundaries.
+$threw = false;
+try {
+  $string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tortor quam, pellentesque at, blandit id, consequat malesuada, lectus. Etiam laoreet quam vel metus. Suspendisse eu risus id justo tincidunt auctor.";
+  $pos = 0;
+  InkScrape::checkTextFormat(0, array(
+  'Lorem',
+  'Suspendisse',
+  'Suspend'), $string);
+} catch (UnmatchedBoundaryException $e) {
+  $threw = true;
+}
+
+echo("Test #2: ".($threw ? 'passed' : 'failed')." test\n");
+
 ?>
