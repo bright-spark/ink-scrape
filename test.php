@@ -74,7 +74,10 @@ echo((($threw && ($e->matchCount() == 2)) ? 'passed' : 'failed')." test (locate-
  */
 $pos = 0;
 $matched = false;
-if(InkScrape::boundedText(array('Lorem','consectetur','tortor'), array('pellentesque','Etiam','Suspendisse'), $string) == " quam, ") {
+if(
+InkScrape::boundedText(array('Lorem','consectetur','tortor'), array('pellentesque','Etiam','Suspendisse'), $string) == " quam, " &&
+InkScrape::boundedText(array('elit'), array('quam'), $string) == ". Vestibulum tortor "
+) {
   $matched = true;
 }
 echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text)\n");
