@@ -11,7 +11,7 @@ $string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum t
  * - test ability to locate text (not necessarily in any order)
  */
 $pos = 0;
-InkScrape::checkFrontBoundariesForText(0, array(
+InkScrape::checkFrontBoundariesForText(array(
 'Lorem',
 'Vestibulum',
 'Etiam'), $string);
@@ -24,7 +24,7 @@ echo("passed test (locate-text-general)\n");
  */
 $threw = false;
 try {
-  InkScrape::checkFrontBoundariesForText(0, array(
+  InkScrape::checkFrontBoundariesForText(array(
   'Lorem',
   'Etiam',
   'Vestibulum'), $string);
@@ -43,7 +43,7 @@ $threw = false;
 try {
   $string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tortor quam, pellentesque at, blandit id, consequat malesuada, lectus. Etiam laoreet quam vel metus. Suspendisse eu risus id justo tincidunt auctor.";
   $pos = 0;
-  InkScrape::checkFrontBoundariesForText(0, array(
+  InkScrape::checkFrontBoundariesForText(array(
   'Lorem',
   'Suspendisse',
   'Suspend'), $string);
