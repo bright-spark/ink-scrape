@@ -20,8 +20,8 @@ $threw = false;
 try {
   $inst =& new InkScrape(0, array(
   'foo',
-  'bar',
-  'gaz'), $string);
+  'gaz',
+  'bar'), $string);
   $inst->checkTextFormat();
 } catch (Exception $e) {
   if($e->getMessage()=="unrecognized page format") {
