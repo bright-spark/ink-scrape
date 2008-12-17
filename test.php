@@ -58,7 +58,6 @@ echo((($threw && ($e->matchCount() == 2)) ? 'passed' : 'failed')." test (locate-
  */
 $threw = false;
 try {
-  $string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tortor quam, pellentesque at, blandit id, consequat malesuada, lectus. Etiam laoreet quam vel metus. Suspendisse eu risus id justo tincidunt auctor.";
   $pos = 0;
   InkScrape::checkFrontBoundariesForText(array(
   'Lorem',
