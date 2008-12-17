@@ -15,7 +15,7 @@ class ForwardBoundaryCheck extends SimpleBoundaryChecker implements IBoundaryChe
     foreach($this->m_boundaries as $boundary) {
       $pos_new = strpos($this->m_data, $boundary, $this->m_pos);
       if($pos_new!==false) {
-        $this->m_pos = $pos_new;
+        $this->m_pos = $pos_new+strlen($boundary);
       } else {
         throw new UnmatchedBoundaryException($this->m_pos, $boundary, $this->m_data);
       }
