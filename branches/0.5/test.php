@@ -4,13 +4,14 @@ error_reporting(E_ALL | E_STRICT);
 
 include("ink-scrape.php");
 
+$string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tortor quam, pellentesque at, blandit id, consequat malesuada, lectus. Etiam laoreet quam vel metus. Suspendisse eu risus id justo tincidunt auctor.";
+
 //Test #1: test ability to locate text (not necessarily in any order).
-$string = " a aga sdg a sgfoo adgamglh ari hahs svbars jgaje jryr eryegaz";
 $pos = 0;
 InkScrape::checkTextFormat(0, array(
-'foo',
-'bar',
-'gaz'), $string);
+'Lorem',
+'Vestibulum',
+'Etiam'), $string);
 echo("Test #1: passed test\n");
 
 //Test #2: test ability to locate text, in specified order.
@@ -18,9 +19,9 @@ echo("Test #1: passed test\n");
 $threw = false;
 try {
   InkScrape::checkTextFormat(0, array(
-  'foo',
-  'gaz',
-  'bar'), $string);
+  'Lorem',
+  'Etiam',
+  'Vestibulum'), $string);
 } catch (UnmatchedBoundaryException $e) {
   $threw = true;
 }
