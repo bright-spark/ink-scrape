@@ -1,45 +1,63 @@
 <?php
 
-// create an pseudo-anonymous function
-function create_ref_function($args, $body) {
-  static $n = 0;
-  $functionName = sprintf('ref_lambda_%d',++$n);
-  $declaration = sprintf('function %s(%s) {%s}',$functionName,$args,$body);
-  eval($declaration);
+include("base/Asserter.php");
+include("base/Predicate.php");
+include("base/Condition.php");
 
-  return $functionName;
-}
+class InkScrape {
+  private static $pos;
+  private static $new_pos;
 
-function assert_chain($assert, $chain, $args) {
-  foreach($chain as $link) {
-    $ret = call_user_func_array($link, $args);
-    $ret_a = call_user_func_array($assert, array_merge(array($ret), $args));
-    if(!$ret_a) {
-      echo("assert failed: $ret\n");
-      return false;
+  public static function currentPos() {
+    return self::$pos;
+  }
+
+  public static function setNewPos($pos) {
+    self::$new_pos = $pos;
+  }
+
+  public static function findStringAssertPassedCallback() {
+    self::$pos = self::$new_pos;
+  }
+
+  public static function findStringAssertFailedCallback() {
+  }
+
+  public static function checkFormatAndMoveReadHead(&$pos, $string, $assert_chain) {
+    self::$pos = $pos;
+    $a = new Asserter();
+    $a->setAssertPassedCallback(array('InkScrape', 'findStringAssertPassedCallback'));
+    $a->setAssertFailedCallback(array('InkScrape', 'findStringAssertFailedCallback'));
+    foreach($assert_chain as $p_str) {
+      $a->addCase(new FindStringPredicate(self::$pos, $p_str, $string), new FoundStringCondition());
     }
-  }
-  return true;
-}
-
-function strpos_andMoveReadHead(&$pos, $haystack, $needle) {
-  $new_pos = strpos($haystack, $needle, $pos);
-  if($new_pos===false) {
-    return false;
-  } else {
-    $pos = $new_pos+strlen($needle);
+    $pass = $a->evaluateAllCases();
+    if(!$pass) throw new Exception("unrecognized page format");
   }
 }
 
-function checkFormatAndMoveReadHead(&$pos, $string, $assert_chain) {
-  $args = array(&$pos, $string);
-  $args_str = '$pos, $string';
-  $evald_chain = array();
-  for($i=0;$i<count($assert_chain);$i++) {
-    array_push($evald_chain, create_ref_function($args_str, 'return strpos_andMoveReadHead(&$pos, $string, \''.$assert_chain[$i].'\');'));
+class FindStringPredicate implements IPredicate {
+  public $pos;
+  public $needle;
+  public $haystack;
+
+  public function __construct($pos, $needle, $haystack) {
+    $this->pos = $pos;
+    $this->needle = $needle;
+    $this->haystack = $haystack;
   }
-  if(!assert_chain(create_function('$ret, '.$args_str, 'return $ret!==false;'), $evald_chain, $args)) {
-    throw new Exception("unrecognized page format");
+
+  public function invoke() {
+    $ret = strpos($this->haystack, $this->needle, InkScrape::currentPos());
+    InkScrape::setNewPos($ret);
+
+    return $ret;
+  }
+}
+
+class FoundStringCondition implements ICondition {
+  public function evaluate($value) {
+    return $value!==false;
   }
 }
 
