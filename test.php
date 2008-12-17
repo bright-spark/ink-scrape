@@ -68,4 +68,15 @@ try {
 
 echo((($threw && ($e->matchCount() == 2)) ? 'passed' : 'failed')." test (locate-text-nonoverlap)\n");
 
+/**
+ * Test locate-bounded-text
+ * - test ability to locate text with front and back boundaries
+ */
+$pos = 0;
+$matched = false;
+if(InkScrape::boundedText(array('Lorem','consectetur','tortor'), array('Suspendisse','Etiam','pellentesque'), $string) == " quam, ") {
+  $matched = true;
+}
+echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text)\n");
+
 ?>
