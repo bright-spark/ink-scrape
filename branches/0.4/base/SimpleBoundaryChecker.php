@@ -1,8 +1,6 @@
 <?php
 
-require_once("IBoundaryChecker.php");
-
-class SimpleBoundaryChecker implements IBoundaryChecker {
+class SimpleBoundaryChecker {
   protected $m_boundaries;
   protected $m_pos;
 
@@ -20,10 +18,6 @@ class SimpleBoundaryChecker implements IBoundaryChecker {
 
   public function setPosition($position) {
     $this->pos = $position
-  }
-
-  public function check() {
-
   }
 }
 
