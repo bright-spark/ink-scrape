@@ -29,11 +29,13 @@ class InkScrape {
   }
 
   public static function boundedText($front, $back, $text, $pos=null) {
-    $fbc = self::checkFrontBoundariesForText($front, $text, $pos);
-    $pos2 = $fbc->currentPosition();
+    $fbc1 = self::checkFrontBoundariesForText($front, $text, $pos);
+    $pos2 = $fbc1->currentPosition();
     $text2 = substr($text, $pos2);
-    $bbc = self::checkBackBoundariesForText($back, $text2);
-    return substr($text, $fbc->currentPosition(), $bbc->currentPosition());
+    $fbc2 = self::checkFrontBoundariesForText($back, $text2);
+    $pos3 = strpos($text2, $back[0]);
+    //if i'm still here, that means boundaries are there
+    return substr($text, $pos2, $pos3);
   }
 }
 
