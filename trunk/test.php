@@ -35,23 +35,6 @@ try {
 echo((($threw && ($e->matchCount() == 2)) ? 'passed' : 'failed')." test (locate-text-forward)\n");
 
 /**
- * Test locate-text-backward
- * - test ability to locate text, in specified order
- * - the third string comes after the second string, so this case should fail if the search head isn't moving backwards
- */
-$threw = false;
-try {
-  InkScrape::checkBackBoundariesForText(array(
-  'Suspendisse',
-  'Vestibulum',
-  'Etiam'), $string);
-} catch (UnmatchedBoundaryException $e) {
-  $threw = true;
-}
-
-echo((($threw && ($e->matchCount() == 2)) ? 'passed' : 'failed')." test (locate-text-backward)\n");
-
-/**
  * Test locate-text-nonoverlap
  * - test ability to locate text, in specified order, with no overlapping of boundaries
  * - third string starts at the same position as the second string, so this case should fail if position isn't moved beyond previous successful matched boundary
@@ -103,27 +86,5 @@ if(InkScrape::textWithFrontBoundaries(array('quam'), $string, $pos) == " vel met
   $matched = true;
 }
 echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-front-arbitrary)\n");
-
-/**
- * Test locate-bounded-text-back
- * - test ability to locate text with back boundaries
- */
-$pos = 0;
-$matched = false;
-if(InkScrape::textWithBackBoundaries(array('ipsum','consectetur','Etiam','Suspendisse'), $string) == "Lorem ") {
-  $matched = true;
-}
-echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-back)\n");
-
-/**
- * Test locate-bounded-text-back-arbitrary
- * - test ability to locate text with back boundaries, starting from an arbitrary position
- */
-$pos = strpos($string, ", pellentesque")+strlen(", pellentesque");
-$matched = false;
-if(InkScrape::textWithbackBoundaries(array('quam'), $string, $pos) == "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tortor ") {
-  $matched = true;
-}
-echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-back-arbitrary)\n");
 
 ?>
