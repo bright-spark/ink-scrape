@@ -37,7 +37,7 @@ echo(($threw ? 'passed' : 'failed')." test (locate-text-forward)\n");
 /**
  * Test locate-text-nonoverlap
  * - test ability to locate text, in specified order, with no overlapping of boundaries
- * - third string starts at the same position as the second string, so this case should fail is position isn't moved beyond previous successful matched boundary
+ * - third string starts at the same position as the second string, so this case should fail if position isn't moved beyond previous successful matched boundary
  */
 $threw = false;
 try {
