@@ -10,8 +10,8 @@ class InkScrape {
   }
 
   public static function checkBackBoundariesForText($boundaries, $text, $pos=null) {
-    $fbc = new BackwardBoundaryCheck($boundaries, $text, $pos);
-    $fbc->check();
+    $bbc = new BackwardBoundaryCheck($boundaries, $text, $pos);
+    $bbc->check();
   }
 }
 
