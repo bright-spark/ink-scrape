@@ -8,7 +8,11 @@ class InkScrape {
   private static $pos;
   private static $new_pos;
 
-  public static function predicateCallback($pos) {
+  public static function currentPos() {
+    return self::$pos;
+  }
+
+  public static function setNewPos($pos) {
     self::$new_pos = $pos;
   }
 
@@ -20,11 +24,12 @@ class InkScrape {
   }
 
   public static function checkFormatAndMoveReadHead(&$pos, $string, $assert_chain) {
+    self::$pos = $pos;
     $a = new Asserter();
     $a->setAssertPassedCallback(array('InkScrape', 'findStringAssertPassedCallback'));
     $a->setAssertFailedCallback(array('InkScrape', 'findStringAssertFailedCallback'));
     foreach($assert_chain as $p_str) {
-      $a->addCase(new FindStringPredicate($pos, $p_str, $string), new FoundStringCondition());
+      $a->addCase(new FindStringPredicate(self::$pos, $p_str, $string), new FoundStringCondition());
     }
     $pass = $a->evaluateAllCases();
     if(!$pass) throw new Exception("unrecognized page format");
@@ -43,8 +48,8 @@ class FindStringPredicate implements IPredicate {
   }
 
   public function invoke() {
-    $ret = strpos($this->haystack, $this->needle, $this->pos);
-    InkScrape::predicateCallback($ret);
+    $ret = strpos($this->haystack, $this->needle, InkScrape::currentPos());
+    InkScrape::setNewPos($ret);
 
     return $ret;
   }
@@ -52,7 +57,7 @@ class FindStringPredicate implements IPredicate {
 
 class FoundStringCondition implements ICondition {
   public function evaluate($value) {
-    return $value!==false;;
+    return $value!==false;
   }
 }
 
