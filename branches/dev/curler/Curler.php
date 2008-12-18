@@ -75,6 +75,14 @@ class Curler {
     return $this->m_currentUrl;
   }
 
+  public function setCookieStorePath($path) {
+    $this->options[CURLOPT_COOKIEFILE] = $this->options[CURLOPT_COOKIEJAR] = $path;
+  }
+
+  public function clearCookieStore() {
+    return file_put_contents($this->options[CURLOPT_COOKIEFILE], "");
+  }
+
   /**
    * Callbacks. Public but not meant to be used.
    */
