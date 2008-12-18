@@ -5,6 +5,8 @@ require_once("RequestException.php");
 class Curler {
   public $options;
   public $provideReferer;
+  public $fileTrail;
+  public $fileTrailNamer;
 
   protected $m_previousUrl;
   protected $m_currentUrl;
@@ -63,6 +65,11 @@ class Curler {
       throw new RequestException("curl request failed: ".curl_error($ch), curl_errno($ch));
     }
     curl_close($ch);
+
+    if($this->fileTrail) {
+      $this->fileTrailNamer = is_callable($this->fileTrailNamer) ? $this->fileTrailNamer : create_function('$str', 'return md5($str);');
+      file_put_contents(call_user_func($this->fileTrailNamer, $url), $this->response_headers."\n".$this->response_body);
+    }
   }
 
   /**
