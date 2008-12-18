@@ -102,6 +102,22 @@ class InkScrape {
     $this->position = $fbc2->position();
     return substr($this->data, $fbc1_pos, $fbc2->firstBoundaryMatchPosition() - $fbc1_pos);
   }
+
+  /**
+   * <p>Treat the text found by invoking {@link #boundedText} as a URL, and sends it a GET request.</p>
+   */
+  public function boundedTextAsGetLink($front, $back, $options=array()) {
+    $url = $this->boundedText($front, $back);
+    $this->sendGetToUrl($url);
+  }
+
+  /**
+   * <p>Treat the text found by invoking {@link #boundedText} as a URL, and sends it a POST request.</p>
+   */
+  public function boundedTextAsPostLink($front, $back, $options=array()) {
+    $url = $this->boundedText($front, $back);
+    $this->sendPostToUrl($url, $options);
+  }
 }
 
 ?>
