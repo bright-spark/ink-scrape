@@ -1,8 +1,30 @@
 <?php
 
 include("bounds/ForwardBoundaryCheck.php");
+include("curler/Curler.php");
 
 class InkScrape {
+  public $curler;
+
+  public $position;
+  public $data;
+
+  public function __construct($options=array()) {
+    $this->curler = new Curler($options);
+  }
+
+  protected function validateParameters() {
+
+  }
+
+  public function sendGetToUrl($url, $options=array()) {
+    $curler->sendGetToUrl($url, $options);
+  }
+
+  public function sendPostToUrl($url, $options=array()) {
+    $curler->sendGetToUrl($url, $options);
+  }
+
   public static function checkFrontBoundariesForText($boundaries, $text, $pos=null) {
     $success = true;
     try {
