@@ -33,6 +33,8 @@ class Curler {
   }
 
   protected function validateParameters(&$options) {
+    $this->m_previousUrl = $this->m_currentUrl;
+    $this->m_currentUrl = $options[CURLOPT_URL];
     $options[CURLOPT_HEADERFUNCTION] = array($this, '__curlCallbackHeader');
     $options[CURLOPT_WRITEFUNCTION] = array($this, '__curlCallbackBody');
   }
