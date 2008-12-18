@@ -63,15 +63,15 @@ class Curler {
   /**
    * Accessors
    */
-  protected function previousUrl() {
+  public function previousUrl() {
     return $this->m_previousUrl;
   }
 
-  protected function setPreviousUrl($url) {
+  public function setPreviousUrl($url) {
     $this->m_previousUrl = $url;
   }
 
-  protected function currentUrl() {
+  public function currentUrl() {
     return $this->m_currentUrl;
   }
 
