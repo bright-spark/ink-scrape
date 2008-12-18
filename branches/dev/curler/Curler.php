@@ -83,6 +83,14 @@ class Curler {
     return file_put_contents($this->options[CURLOPT_COOKIEFILE], "");
   }
 
+  public function responseHeaders() {
+    return $this->response_headers;
+  }
+
+  public function responseBody() {
+    return $this->response_body;
+  }
+
   /**
    * Callbacks. Public but not meant to be used.
    */
