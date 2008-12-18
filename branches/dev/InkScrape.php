@@ -30,7 +30,7 @@ class InkScrape {
   }
 
   public function sendPostToUrlFields($url, $fields=array(), $options=array()) {
-    $this->curler->sendPostToUrl($url, $fields, $options);
+    $this->curler->sendPostToUrlFields($url, $fields, $options);
     $this->data = $this->curler->responseBody();
     $this->position = 0;
   }
@@ -116,7 +116,7 @@ class InkScrape {
    */
   public function boundedTextAsPostLink($front, $back, $fields=array(), $options=array()) {
     $url = $this->boundedText($front, $back);
-    $this->sendPostToUrl($url, $fields, $options);
+    $this->sendPostToUrlFields($url, $fields, $options);
   }
 }
 
