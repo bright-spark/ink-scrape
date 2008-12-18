@@ -27,7 +27,7 @@ $return_value = InkScrape::checkFrontBoundariesForText(array(
   'Etiam',
   'Vestibulum'), $string);
 
-echo((!$return_value ? 'passed' : 'failed')." test (locate-text-forward)\n");
+echo((!$return_value ? 'passed' : 'FAILED')." test (locate-text-forward)\n");
 
 /**
  * Test locate-text-nonoverlap
@@ -39,7 +39,7 @@ $return_value = InkScrape::checkFrontBoundariesForText(array(
   'Suspendisse',
   'Suspend'), $string);
 
-echo((!$return_value ? 'passed' : 'failed')." test (locate-text-nonoverlap)\n");
+echo((!$return_value ? 'passed' : 'FAILED')." test (locate-text-nonoverlap)\n");
 
 /**
  * Test locate-bounded-text
@@ -53,7 +53,7 @@ InkScrape::boundedText(array('elit'), array('quam'), $string) == ". Vestibulum t
 ) {
   $matched = true;
 }
-echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text)\n");
+echo(($matched ? 'passed' : 'FAILED')." test (locate-bounded-text)\n");
 
 /**
  * Test locate-bounded-text-front
@@ -64,7 +64,7 @@ $matched = false;
 if(InkScrape::textFollowingFrontBoundaries(array('Lorem','Etiam','Suspendisse','tincidunt'), $string) == " auctor.") {
   $matched = true;
 }
-echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-front)\n");
+echo(($matched ? 'passed' : 'FAILED')." test (locate-bounded-text-front)\n");
 
 /**
  * Test locate-bounded-text-front-arbitrary
@@ -75,6 +75,6 @@ $matched = false;
 if(InkScrape::textFollowingFrontBoundaries(array('quam'), $string, $pos) == " vel metus. Suspendisse eu risus id justo tincidunt auctor.") {
   $matched = true;
 }
-echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-front-arbitrary)\n");
+echo(($matched ? 'passed' : 'FAILED')." test (locate-bounded-text-front-arbitrary)\n");
 
 ?>
