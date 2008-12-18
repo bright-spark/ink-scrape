@@ -7,7 +7,7 @@ class NoTagNameFoundException extends Exception {}
 
 class Parsing {
   public static function parseUnclosedTag($str) {
-    $ret = preg_match('/<([^\s]+)(.+)>/', $str, $matches);
+    $ret = preg_match('/<([^\s]+)(.+)\/?>/', $str, $matches);
     if($ret===false || $ret<=0) throw new NoTagNameFoundException("unable to find <input> elements");
     $tag_name = $matches[1];
 
