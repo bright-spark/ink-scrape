@@ -45,13 +45,42 @@ class InkScrape {
   }
 
   /**
+   * <p>Updates position after checking whether <code>$boundaries</code> can be found in front of {@link #data}, starting from {@link #position}. The position is updated only if all boundaries are found.</p>
+   * <p>Note: It does not update the <code>position</code> member variable.</p>
+   */
+  public function advancePositionWithBoundaries($boundaries) {
+    $fbc = new ForwardBoundaryCheck($boundaries, $this->data, $this->position);
+    try {
+      $fbc->check();
+
+      //this won't execute if an exception is thrown.
+      $this->position = $fbc->position();
+    } catch(UnmatchedBoundaryException $e) {
+
+    }
+  }
+
+  /**
+   * <p>Updates position after checking whether <code>$boundaries</code> can be found in front of {@link #data}, starting from {@link #position}. The position is updated even if all the boundaries aren't found.</p>
+   * <p>Note: It does not update the <code>position</code> member variable.</p>
+   */
+  public function advancePositionWithBoundariesNonatomic($boundaries) {
+    $fbc = new ForwardBoundaryCheck($boundaries, $this->data, $this->position);
+    try {
+      $fbc->check();
+    } catch(UnmatchedBoundaryException $e) {
+      $this->position = $fbc->position();
+    }
+  }
+
+  /**
    * <p>Returns the text in {@link #data} following <code>$boundaries</code>. Boundary checking starts from {@link #position}.</p>
    * <p>Note: It does not update the <code>position</code> member variable.</p>
    */
   public function textFollowingFrontBoundaries($boundaries) {
     $fbc = new ForwardBoundaryCheck($boundaries, $this->data, $this->position);
     $fbc->check();
-    $str = substr($text, $fbc->currentPosition());
+    $str = substr($text, $fbc->position());
     return $str;
   }
 
