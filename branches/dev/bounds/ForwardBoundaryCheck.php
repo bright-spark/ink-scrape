@@ -20,9 +20,8 @@ class ForwardBoundaryCheck extends SimpleBoundaryChecker implements IBoundaryChe
       if($boundary_pos!==false) {
         if($i===0) {
           $this->m_firstBoundaryPosition = $boundary_pos;
-        } else {
-          $this->m_lastBoundaryPosition = $boundary_pos;
         }
+        $this->m_lastBoundaryPosition = $boundary_pos;
         $this->m_lastBoundaryIndex = $i;
         $this->m_pos = $boundary_pos+strlen($boundary);
       } else {
