@@ -17,6 +17,7 @@ class Curler {
   public function __construct($options=array()) {
     $this->options = $options;
     $this->provideReferer = true;
+    $this->fileTrail = false;
     $this->m_previousUrl = '';
     $this->m_currentUrl = '';
   }
