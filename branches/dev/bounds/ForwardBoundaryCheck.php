@@ -23,6 +23,7 @@ class ForwardBoundaryCheck extends SimpleBoundaryChecker implements IBoundaryChe
         } else {
           $this->m_lastBoundaryPosition = $boundary_pos;
         }
+        $this->m_lastBoundaryIndex = $i;
         $this->m_pos = $boundary_pos+strlen($boundary);
       } else {
         throw new UnmatchedBoundaryException($this->m_pos, $boundary, $this->m_data, $i);

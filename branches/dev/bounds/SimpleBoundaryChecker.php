@@ -4,6 +4,7 @@ class SimpleBoundaryChecker {
   protected $m_boundaries;
   protected $m_firstBoundaryPosition;
   protected $m_lastBoundaryPosition;
+  protected $m_lastBoundaryIndex;
   protected $m_data;
   protected $m_pos;
 
@@ -21,6 +22,10 @@ class SimpleBoundaryChecker {
 
   public function lastBoundaryMatchPosition() {
     return $m_lastBoundaryPosition;
+  }
+
+  public function lastBoundaryMatchIndex() {
+    return $m_lastBoundaryIndex;
   }
 
   public function data() {
@@ -45,6 +50,7 @@ class SimpleBoundaryChecker {
     if(empty($this->m_pos) && $this->m_pos!==0) $this->m_pos = 0;
     $this->m_firstBoundaryPosition = null;
     $this->m_lastBoundaryPosition = null;
+    $this->m_lastBoundaryIndex = null;
   }
 }
 
