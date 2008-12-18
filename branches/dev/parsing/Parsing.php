@@ -24,7 +24,7 @@ class Parsing {
 
     $tags = array();
     foreach($matches[0] as $tag_match) {
-      array_push($tags, self::parseUnclosedTag($tag_match));
+      array_push($tags, self::parseUnclosedTagRe($tag_match, $re));
     }
     return $tags;
   }
