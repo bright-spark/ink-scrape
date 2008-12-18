@@ -43,6 +43,15 @@ class Curler {
     if($this->provideReferer) {
       $options[CURLOPT_REFERER] = $this->m_previousUrl;
     }
+    if(array_key_exists(CURLOPT_POSTFIELDS, $options)) {
+      if(is_array($options[CURLOPT_POSTFIELDS])) {
+        $fields_arr = array();
+        foreach($options[CURLOPT_POSTFIELDS] as $opt=>$val) {
+          array_push($fields_arr, "{$opt}={$val}");
+        }
+        $options[CURLOPT_POSTFIELDS] = implode("&", $fields_arr);
+      }
+    }
   }
 
   protected function sendRequestToUrl($url, $options=null) {
