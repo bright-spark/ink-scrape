@@ -91,7 +91,7 @@ class InkScrape {
   public function boundedText($front, $back) {
     $fbc1 = new ForwardBoundaryCheck($front, $this->data, $this->position);
     $fbc1->check();
-    $pos2 = $fbc1->currentPosition();
+    $pos2 = $fbc1->position();
     $text2 = substr($text, $pos2);
 
     $fbc2 = new ForwardBoundaryCheck($back, $text2);
