@@ -2,6 +2,8 @@
 
 class SimpleBoundaryChecker {
   protected $m_boundaries;
+  protected $m_firstBoundaryPosition;
+  protected $m_lastBoundaryPosition;
   protected $m_data;
   protected $m_pos;
 
@@ -11,6 +13,14 @@ class SimpleBoundaryChecker {
 
   public function setBoundaries($boundaries) {
     $this->boundaries = $boundaries;
+  }
+
+  public function firstBoundaryMatchPosition() {
+    return $m_firstBoundaryPosition;
+  }
+
+  public function lastBoundaryMatchPosition() {
+    return $m_lastBoundaryPosition;
   }
 
   public function data() {
@@ -33,6 +43,8 @@ class SimpleBoundaryChecker {
     if(empty($this->m_boundaries))	throw new InvalidArgumentException("expected non-empty array");
     if(empty($this->m_data))	throw new InvalidArgumentException("expected non-empty string");
     if(empty($this->m_pos) && $this->m_pos!==0) $this->m_pos = 0;
+    $this->m_firstBoundaryPosition = null;
+    $this->m_lastBoundaryPosition = null;
   }
 }
 
