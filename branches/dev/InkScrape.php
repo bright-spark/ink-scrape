@@ -118,6 +118,34 @@ class InkScrape {
     $url = $this->boundedText($front, $back);
     $this->sendPostToUrlFields($url, $fields, $options);
   }
+
+  /**
+   * <p>Treat the text found as form elements and returns a hash representation of it.</p>
+   */
+  public function boundedTextAsFormInput($front, $back) {
+    $text = $this->boundedText($front, $back);
+
+    $elements = array();
+    $ret = preg_match_all("/<input [^>]+>/", $text, &$elements);
+    if($ret===false || $ret<=0) throw new UnexpectedValueException("unable to find <input> elements");
+
+    $elements_rep = array();
+    foreach($elements[0] as $element) {
+      $element_str;$element_name;$element_value;
+      $ret = preg_match('/name="([^"]+)"/', $element, &$element_str);
+      if($ret===false || $ret<=0) throw new UnexpectedValueException("unable to find 'name' attribute");
+      $element_name = $element_str[1];
+
+      $ret = preg_match('/value="([^"]+)"/', $element, &$element_str);
+      if($ret===false || $ret<=0) {
+        $element_value = "";
+      } else {
+        $element_value = $element_str[1];
+      }
+      $elements_rep[$element_name] = $element_value;
+    }
+    return $elements_rep;
+  }
 }
 
 ?>
