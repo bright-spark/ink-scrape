@@ -46,7 +46,7 @@ class Curler {
     if(empty($returnValue)) {
       throw new RequestException("curl request failed: ".curl_error($ch), curl_errno($ch));
     }
-    curl_close();
+    curl_close($ch);
   }
 }
 
