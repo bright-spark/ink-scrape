@@ -29,7 +29,7 @@ class Curler {
   }
 
   protected function sendRequestToUrl($url, $options=null) {
-    $opt_arr = array_merge($this->m_options, $options);
+    $opt_arr = array_merge($this->options, $options);
     $this->validateParameters(&$options);
 
     $ch = curl_init();
