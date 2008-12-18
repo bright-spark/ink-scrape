@@ -14,7 +14,7 @@ class InkScrape {
     return $success;
   }
 
-  public static function textWithFrontBoundaries($boundaries, $text, $pos=null) {
+  public static function textFollowingFrontBoundaries($boundaries, $text, $pos=null) {
     $fbc = new ForwardBoundaryCheck($boundaries, $text, $pos);
     $fbc->check();
     $str = substr($text, $fbc->currentPosition());
