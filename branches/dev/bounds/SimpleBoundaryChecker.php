@@ -21,7 +21,7 @@ class SimpleBoundaryChecker {
     $this->m_data = $data;
   }
 
-  public function currentPosition() {
+  public function position() {
     return $this->m_pos;
   }
 
