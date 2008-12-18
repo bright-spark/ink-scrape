@@ -13,16 +13,12 @@ class InkScrape {
     $this->curler = new Curler($options);
   }
 
-  protected function validateParameters() {
-
-  }
-
   public function sendGetToUrl($url, $options=array()) {
-    $curler->sendGetToUrl($url, $options);
+    $this->curler->sendGetToUrl($url, $options);
   }
 
   public function sendPostToUrl($url, $options=array()) {
-    $curler->sendGetToUrl($url, $options);
+    $this->curler->sendGetToUrl($url, $options);
   }
 
   public static function checkFrontBoundariesForText($boundaries, $text, $pos=null) {

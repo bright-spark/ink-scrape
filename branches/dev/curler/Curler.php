@@ -24,8 +24,17 @@ class Curler {
     $this->sendRequestToUrl($url, $options);
   }
 
+  public function __curlCallbackHeader($ch, $header) {
+    return strlen($header);
+  }
+
+  public function __curlCallbackBody($ch, $body) {
+    return strlen($body);
+  }
+
   protected function validateParameters(&$options) {
-    $options[CURLOPT_RETURNTRANSFER] = true;
+    $options[CURLOPT_HEADERFUNCTION] = array($this, '__curlCallbackHeader');
+    $options[CURLOPT_WRITEFUNCTION] = array($this, '__curlCallbackBody');
   }
 
   protected function sendRequestToUrl($url, $options=null) {
