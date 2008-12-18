@@ -4,6 +4,7 @@ require_once("RequestException.php");
 
 class Curler {
   public $options;
+  public $provideReferer;
 
   protected $m_previousUrl;
   protected $m_currentUrl;
@@ -13,6 +14,7 @@ class Curler {
 
   public function __construct($options=array()) {
     $this->options = $options;
+    $this->provideReferer = true;
     $this->m_previousUrl = '';
     $this->m_currentUrl = '';
   }
@@ -34,6 +36,9 @@ class Curler {
     $this->response_body = '';
     $options[CURLOPT_HEADERFUNCTION] = array($this, '__curlCallbackHeader');
     $options[CURLOPT_WRITEFUNCTION] = array($this, '__curlCallbackBody');
+    if($this->provideReferer) {
+      $options[CURLOPT_REFERER] = $this->m_previousUrl;
+    }
   }
 
   protected function sendRequestToUrl($url, $options=null) {
