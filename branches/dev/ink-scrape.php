@@ -15,16 +15,20 @@ class InkScrape {
 
   public function sendGetToUrl($url, $options=array()) {
     $this->curler->sendGetToUrl($url, $options);
+    $this->data = $this->curler->responseBody();
+    $this->position = 0;
   }
 
   public function sendPostToUrl($url, $options=array()) {
     $this->curler->sendGetToUrl($url, $options);
+    $this->data = $this->curler->responseBody();
+    $this->position = 0;
   }
 
-  public static function checkFrontBoundariesForText($boundaries, $text, $pos=null) {
+  public function checkFrontBoundaries($boundaries) {
     $success = true;
     try {
-      $fbc = new ForwardBoundaryCheck($boundaries, $text, $pos);
+      $fbc = new ForwardBoundaryCheck($boundaries, $this->data, $this->position);
       $fbc->check();
     } catch(UnmatchedBoundaryException $e) {
       $success = false;
@@ -32,24 +36,24 @@ class InkScrape {
     return $success;
   }
 
-  public static function textFollowingFrontBoundaries($boundaries, $text, $pos=null) {
-    $fbc = new ForwardBoundaryCheck($boundaries, $text, $pos);
+  public function textFollowingFrontBoundaries($boundaries) {
+    $fbc = new ForwardBoundaryCheck($boundaries, $this->data, $this->position);
     $fbc->check();
     $str = substr($text, $fbc->currentPosition());
     return $str;
   }
 
-  public static function boundedText($front, $back, $text, $pos=null) {
-    $fbc1 = new ForwardBoundaryCheck($front, $text, $pos);
+  public function boundedText($front, $back) {
+    $fbc1 = new ForwardBoundaryCheck($front, $this->data, $this->position);
     $fbc1->check();
     $pos2 = $fbc1->currentPosition();
     $text2 = substr($text, $pos2);
 
-    $fbc2 = new ForwardBoundaryCheck($back, $text2, null);
+    $fbc2 = new ForwardBoundaryCheck($back, $text2);
     $fbc2->check();
     $pos3 = strpos($text2, $back[0]);
     //if i'm still here, that means boundaries are there
-    return substr($text, $pos2, $pos3);
+    return substr($this->data, $pos2, $pos3);
   }
 }
 
