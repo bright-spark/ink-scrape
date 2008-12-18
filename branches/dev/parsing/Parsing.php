@@ -6,8 +6,11 @@ class NoAttributeFoundException extends Exception {}
 class NoTagNameFoundException extends Exception {}
 
 class Parsing {
+  const re_unclosedTag = '/<([^\s]+)(.+)\/?>/';
+  const re_attributePair = '/\s*([^=]+)="([^"]+)"/';
+
   public static function parseUnclosedTag($str) {
-    $ret = preg_match('/<([^\s]+)(.+)\/?>/', $str, $matches);
+    $ret = preg_match(self::re_unclosedTag, $str, $matches);
     if($ret===false || $ret<=0) throw new NoTagNameFoundException("unable to find <input> elements");
     $tag_name = $matches[1];
 
@@ -23,7 +26,7 @@ class Parsing {
   }
 
   public static function parseAttributes($attr_str) {
-    $ret = preg_match_all('/\s*([^=]+)="([^"]+)"/', $attr_str, $matches);
+    $ret = preg_match_all(self::re_attributePair, $attr_str, $matches);
     if($ret===false || $ret<=0) throw new NoAttributeFoundException("unable to find attributes");
 
     $attrs = array_combine($matches[1], $matches[2]);
