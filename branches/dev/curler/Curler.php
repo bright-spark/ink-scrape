@@ -1,6 +1,6 @@
 <?php
 
-require_once("RequestException");
+require_once("RequestException.php");
 
 class Curler {
   public $options;
