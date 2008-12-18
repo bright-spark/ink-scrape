@@ -30,13 +30,13 @@ class Curler {
 
   protected function sendRequestToUrl($url, $options=null) {
     $opt_arr = array_merge($this->options, $options);
-    $this->validateParameters(&$options);
+    $this->validateParameters(&$opt_arr);
 
     $ch = curl_init();
     if(function_exists('curl_setopt_array')) {
-      curl_setopt_array($ch, $options);
+      curl_setopt_array($ch, $opt_arr);
     } else {
-      foreach($options as $opt=>$val) {
+      foreach($opt_arr as $opt=>$val) {
         curl_setopt($ch, $opt, $val);
       }
     }
