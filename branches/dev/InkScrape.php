@@ -13,6 +13,10 @@ class InkScrape {
     $this->curler = new Curler($options);
   }
 
+  /**
+   * Data-source methods.
+   * These provide the instance with data to work on in {@link #data}.
+   */
   public function sendGetToUrl($url, $options=array()) {
     $this->curler->sendGetToUrl($url, $options);
     $this->data = $this->curler->responseBody();
@@ -25,6 +29,10 @@ class InkScrape {
     $this->position = 0;
   }
 
+  /**
+   * <p>Checks whether <code>$boundaries</code> can be found in front of {@link #data}, starting from {@link #position}.</p>
+   * <p>Note: It does not update the <code>position</code> member variable.</p>
+   */
   public function checkFrontBoundaries($boundaries) {
     $success = true;
     try {
@@ -36,6 +44,10 @@ class InkScrape {
     return $success;
   }
 
+  /**
+   * <p>Returns the text in {@link #data} following <code>$boundaries</code>. Boundary checking starts from {@link #position}.</p>
+   * <p>Note: It does not update the <code>position</code> member variable.</p>
+   */
   public function textFollowingFrontBoundaries($boundaries) {
     $fbc = new ForwardBoundaryCheck($boundaries, $this->data, $this->position);
     $fbc->check();
@@ -43,6 +55,10 @@ class InkScrape {
     return $str;
   }
 
+  /**
+   * <p>Returns the text in {@link #data} following <code>$boundaries</code>. Boundary checking starts from {@link #position}.</p>
+   * <p>Note: It does not update the <code>position</code> member variable.</p>
+   */
   public function boundedText($front, $back) {
     $fbc1 = new ForwardBoundaryCheck($front, $this->data, $this->position);
     $fbc1->check();
