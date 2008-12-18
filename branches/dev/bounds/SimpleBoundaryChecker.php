@@ -17,15 +17,15 @@ class SimpleBoundaryChecker {
   }
 
   public function firstBoundaryMatchPosition() {
-    return $m_firstBoundaryPosition;
+    return $this->m_firstBoundaryPosition;
   }
 
   public function lastBoundaryMatchPosition() {
-    return $m_lastBoundaryPosition;
+    return $this->m_lastBoundaryPosition;
   }
 
   public function lastBoundaryMatchIndex() {
-    return $m_lastBoundaryIndex;
+    return $this->m_lastBoundaryIndex;
   }
 
   public function data() {
