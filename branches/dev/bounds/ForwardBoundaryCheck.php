@@ -15,18 +15,18 @@ class ForwardBoundaryCheck extends SimpleBoundaryChecker implements IBoundaryChe
     $count = 0;
     $this->validateParameters();
     foreach($this->m_boundaries as $boundary) {
-      $pos_new = strpos($this->m_data, $boundary, $this->m_pos);
-      if($pos_new!==false) {
+      $boundary_pos = strpos($this->m_data, $boundary, $this->m_pos);
+      if($boundary_pos!==false) {
         if($count===0) {
-          $this->m_firstBoundaryPosition = $pos_new;
+          $this->m_firstBoundaryPosition = $boundary_pos;
         }
-        $this->m_pos = $pos_new+strlen($boundary);
+        $this->m_pos = $boundary_pos+strlen($boundary);
         $count++;
       } else {
         throw new UnmatchedBoundaryException($this->m_pos, $boundary, $this->m_data, $count);
       }
     }
-    $this->m_lastBoundaryPosition = $pos_new;
+    $this->m_lastBoundaryPosition = $boundary_pos;
   }
 }
 
