@@ -61,7 +61,7 @@ echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text)\n");
  */
 $pos = 0;
 $matched = false;
-if(InkScrape::textWithFrontBoundaries(array('Lorem','Etiam','Suspendisse','tincidunt'), $string) == " auctor.") {
+if(InkScrape::textFollowingFrontBoundaries(array('Lorem','Etiam','Suspendisse','tincidunt'), $string) == " auctor.") {
   $matched = true;
 }
 echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-front)\n");
@@ -72,7 +72,7 @@ echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-front)\n");
  */
 $pos = strpos($string, "laoreet ")+strlen("laoreet ");
 $matched = false;
-if(InkScrape::textWithFrontBoundaries(array('quam'), $string, $pos) == " vel metus. Suspendisse eu risus id justo tincidunt auctor.") {
+if(InkScrape::textFollowingFrontBoundaries(array('quam'), $string, $pos) == " vel metus. Suspendisse eu risus id justo tincidunt auctor.") {
   $matched = true;
 }
 echo(($matched ? 'passed' : 'failed')." test (locate-bounded-text-front-arbitrary)\n");
