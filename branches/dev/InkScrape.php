@@ -80,14 +80,16 @@ class InkScrape {
   public function boundedText($front, $back) {
     $fbc1 = new ForwardBoundaryCheck($front, $this->data, $this->position);
     $fbc1->check();
-    $pos2 = $fbc1->position();
+    $fbc1_pos = $fbc1->position();
 
-    $fbc2 = new ForwardBoundaryCheck($back, $this->data, $pos2);
+    $fbc2 = new ForwardBoundaryCheck($back, $this->data, $fbc1_pos);
     $fbc2->check();
-    $pos3 = $fbc2->firstBoundaryMatchPosition();
+
     //if i'm still here, that means boundaries are there
+
+    //store position of extent of boundaries
     $this->position = $fbc2->position();
-    return substr($this->data, $pos2, $pos3 - $pos2);
+    return substr($this->data, $fbc1_pos, $fbc2->firstBoundaryMatchPosition() - $fbc1_pos);
   }
 }
 
