@@ -22,34 +22,24 @@ echo("passed test (locate-text-general)\n");
  * - test ability to locate text, in specified order
  * - the third string comes before the second string, so this case should fail if position isn't stored
  */
-$threw = false;
-try {
-  InkScrape::checkFrontBoundariesForText(array(
+$return_value = InkScrape::checkFrontBoundariesForText(array(
   'Lorem',
   'Etiam',
   'Vestibulum'), $string);
-} catch (UnmatchedBoundaryException $e) {
-  $threw = true;
-}
 
-echo((($threw && ($e->matchCount() == 2)) ? 'passed' : 'failed')." test (locate-text-forward)\n");
+echo((!$return_value ? 'passed' : 'failed')." test (locate-text-forward)\n");
 
 /**
  * Test locate-text-nonoverlap
  * - test ability to locate text, in specified order, with no overlapping of boundaries
  * - third string starts at the same position as the second string, so this case should fail if position isn't moved beyond previous successful matched boundary
  */
-$threw = false;
-try {
-  InkScrape::checkFrontBoundariesForText(array(
+$return_value = InkScrape::checkFrontBoundariesForText(array(
   'Lorem',
   'Suspendisse',
   'Suspend'), $string);
-} catch (UnmatchedBoundaryException $e) {
-  $threw = true;
-}
 
-echo((($threw && ($e->matchCount() == 2)) ? 'passed' : 'failed')." test (locate-text-nonoverlap)\n");
+echo((!$return_value ? 'passed' : 'failed')." test (locate-text-nonoverlap)\n");
 
 /**
  * Test locate-bounded-text
