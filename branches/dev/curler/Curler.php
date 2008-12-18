@@ -27,16 +27,6 @@ class Curler {
     $this->sendRequestToUrl($url, $options);
   }
 
-  public function __curlCallbackHeader($ch, $header) {
-    $this->response_headers .= $header;
-    return strlen($header);
-  }
-
-  public function __curlCallbackBody($ch, $body) {
-    $this->response_body .= $body;
-    return strlen($body);
-  }
-
   protected function validateParameters(&$options) {
     $this->m_previousUrl = $this->m_currentUrl;
     $this->m_currentUrl = $options[CURLOPT_URL];
@@ -68,6 +58,19 @@ class Curler {
       throw new RequestException("curl request failed: ".curl_error($ch), curl_errno($ch));
     }
     curl_close($ch);
+  }
+
+  /**
+   * Callbacks. Public but not meant to be used.
+   */
+  public function __curlCallbackHeader($ch, $header) {
+    $this->response_headers .= $header;
+    return strlen($header);
+  }
+
+  public function __curlCallbackBody($ch, $body) {
+    $this->response_body .= $body;
+    return strlen($body);
   }
 }
 
