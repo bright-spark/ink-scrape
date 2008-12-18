@@ -9,6 +9,12 @@ class InkScrape {
   public $position;
   public $data;
 
+  protected $m_lastBoundaryChecker;
+
+  public function lastBoundaryChecker() {
+    return $this->m_lastBoundaryChecker;
+  }
+
   public function __construct($options=array()) {
     $this->curler = new Curler($options);
   }
@@ -37,6 +43,7 @@ class InkScrape {
     $success = true;
     try {
       $fbc = new ForwardBoundaryCheck($boundaries, $this->data, $this->position);
+      $this->m_lastBoundaryChecker = $fbc;
       $fbc->check();
     } catch(UnmatchedBoundaryException $e) {
       $success = false;
@@ -50,6 +57,7 @@ class InkScrape {
    */
   public function advancePositionWithBoundaries($boundaries) {
     $fbc = new ForwardBoundaryCheck($boundaries, $this->data, $this->position);
+    $this->m_lastBoundaryChecker = $fbc;
     try {
       $fbc->check();
 
@@ -66,6 +74,7 @@ class InkScrape {
    */
   public function advancePositionWithBoundariesNonatomic($boundaries) {
     $fbc = new ForwardBoundaryCheck($boundaries, $this->data, $this->position);
+    $this->m_lastBoundaryChecker = $fbc;
     try {
       $fbc->check();
     } catch(UnmatchedBoundaryException $e) {
@@ -79,10 +88,12 @@ class InkScrape {
    */
   public function boundedText($front, $back) {
     $fbc1 = new ForwardBoundaryCheck($front, $this->data, $this->position);
+    $this->m_lastBoundaryChecker = $fbc1;
     $fbc1->check();
     $fbc1_pos = $fbc1->position();
 
     $fbc2 = new ForwardBoundaryCheck($back, $this->data, $fbc1_pos);
+    $this->m_lastBoundaryChecker = $fbc2;
     $fbc2->check();
 
     //if i'm still here, that means boundaries are there
