@@ -61,6 +61,21 @@ class Curler {
   }
 
   /**
+   * Accessors
+   */
+  protected function previousUrl() {
+    return $this->m_previousUrl;
+  }
+
+  protected function setPreviousUrl($url) {
+    $this->m_previousUrl = $url;
+  }
+
+  protected function currentUrl() {
+    return $this->m_currentUrl;
+  }
+
+  /**
    * Callbacks. Public but not meant to be used.
    */
   public function __curlCallbackHeader($ch, $header) {
