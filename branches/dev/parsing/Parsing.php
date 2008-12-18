@@ -9,6 +9,17 @@ class Parsing {
   const re_unclosedTag = '/<([^\s]+)(.+)\/?>/';
   const re_attributePair = '/\s*([^=]+)="([^"]+)"/';
 
+  public static function parseAllUnclosedTags($str) {
+    $ret = preg_match_all(self::re_unclosedTag, $str, $matches);
+    if($ret===false || $ret<=0) throw new NoTagNameFoundException("unable to find <input> elements");
+
+    $tags = array();
+    foreach($matches[0] as $tag_match) {
+      array_push($tags, self::parseUnclosedTag($tag_match));
+    }
+    return $tags;
+  }
+
   public static function parseUnclosedTag($str) {
     $ret = preg_match(self::re_unclosedTag, $str, $matches);
     if($ret===false || $ret<=0) throw new NoTagNameFoundException("unable to find <input> elements");
