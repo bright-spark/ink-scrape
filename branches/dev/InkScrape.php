@@ -29,7 +29,7 @@ class InkScrape {
     $this->position = 0;
   }
 
-  public function sendPostToUrlFields($url, $fields=array(), $options=array()) {
+  public function sendPostToUrlFields($url, $fields=null, $options=array()) {
     $this->curler->sendPostToUrlFields($url, $fields, $options);
     $this->data = $this->curler->responseBody();
     $this->position = 0;
@@ -114,7 +114,7 @@ class InkScrape {
   /**
    * <p>Treat the text found by invoking {@link #boundedText} as a URL, and sends it a POST request.</p>
    */
-  public function boundedTextAsPostLink($front, $back, $fields=array(), $options=array()) {
+  public function boundedTextAsPostLink($front, $back, $fields=null, $options=array()) {
     $url = $this->boundedText($front, $back);
     $this->sendPostToUrlFields($url, $fields, $options);
   }

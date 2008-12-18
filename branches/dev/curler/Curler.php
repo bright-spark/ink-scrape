@@ -27,7 +27,7 @@ class Curler {
     $this->sendRequestToUrl($url, $options);
   }
 
-  public function sendPostToUrlFields($url, $fields=array(), $options=array()) {
+  public function sendPostToUrlFields($url, $fields=null, $options=array()) {
     $options[CURLOPT_POST] = true;
     $options[CURLOPT_POSTFIELDS] = $fields;
     $this->sendRequestToUrl($url, $options);
