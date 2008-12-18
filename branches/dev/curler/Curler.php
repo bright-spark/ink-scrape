@@ -29,15 +29,18 @@ class Curler {
   }
 
   protected function sendRequestToUrl($url, $options=null) {
-    $opt_arr = array_merge($this->options, $options);
-    $opt_arr[CURLOPT_URL] = $url;
-    $this->validateParameters(&$opt_arr);
+    $options[CURLOPT_URL] = $url;
+    $this->validateParameters($options);
 
     $ch = curl_init();
     if(function_exists('curl_setopt_array')) {
-      curl_setopt_array($ch, $opt_arr);
+      curl_setopt_array($ch, $this->options);
+      curl_setopt_array($ch, $options);
     } else {
-      foreach($opt_arr as $opt=>$val) {
+      foreach($this->options as $opt=>$val) {
+        curl_setopt($ch, $opt, $val);
+      }
+      foreach($options as $opt=>$val) {
         curl_setopt($ch, $opt, $val);
       }
     }
