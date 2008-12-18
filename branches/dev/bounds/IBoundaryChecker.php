@@ -6,6 +6,7 @@ interface IBoundaryChecker {
   public function firstBoundaryMatchPosition();
   public function lastBoundaryMatchPosition();
   public function lastBoundaryMatchIndex();
+  public function totalBoundariesMatched();
 
   public function data();
   public function setData($data);

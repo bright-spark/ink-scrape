@@ -28,6 +28,10 @@ class SimpleBoundaryChecker {
     return $this->m_lastBoundaryIndex;
   }
 
+  public function totalBoundariesMatched() {
+    return $this->m_lastBoundaryIndex + 1;
+  }
+
   public function data() {
     return $this->m_data;
   }
