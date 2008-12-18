@@ -9,7 +9,7 @@ class Parsing {
   const re_unclosedTagGeneral = '/<[^>]+\/?>/';
   const re_unclosedTagNamedGeneral = '/<%s[^>]+\/?>/';
   const re_unclosedTag = '/<([^\s]+)(.+)\/?>/';
-  const re_unclosedNamedTag = '/<%s(.+)\/?>/';
+  const re_unclosedNamedTag = '/<(%s)(.+)\/?>/';
   const re_attributePair = '/\s*([^=]+)="([^"]+)"/';
 
   public static function parseAllUnclosedTags($str) {
