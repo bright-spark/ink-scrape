@@ -85,8 +85,9 @@ class InkScrape {
 
     $fbc2 = new ForwardBoundaryCheck($back, $text2);
     $fbc2->check();
-    $pos3 = strpos($text2, $back[0]);
+    $pos3 = $fbc2->firstBoundaryMatchPosition();
     //if i'm still here, that means boundaries are there
+    $this->position = $pos2 + $fbc2->position();
     return substr($this->data, $pos2, $pos3);
   }
 }
