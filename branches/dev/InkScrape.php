@@ -77,7 +77,7 @@ class InkScrape {
    * <p>Returns the text in {@link #data} following <code>$boundaries</code>. Boundary checking starts from {@link #position}.</p>
    * <p>Note: It does not update the <code>position</code> member variable.</p>
    */
-  public function textFollowingFrontBoundaries($boundaries) {
+  public function textFollowingBoundaries($boundaries) {
     $fbc = new ForwardBoundaryCheck($boundaries, $this->data, $this->position);
     $fbc->check();
     $str = substr($text, $fbc->position());
