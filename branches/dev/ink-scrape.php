@@ -1,6 +1,6 @@
 <?php
 
-include("base/ForwardBoundaryCheck.php");
+include("bounds/ForwardBoundaryCheck.php");
 
 class InkScrape {
   public static function checkFrontBoundariesForText($boundaries, $text, $pos=null) {
