@@ -104,22 +104,6 @@ class InkScrape {
   }
 
   /**
-   * <p>Treat the text found by invoking {@link #boundedText} as a URL, and sends it a GET request.</p>
-   */
-  public function boundedTextAsGetLink($front, $back, $options=array()) {
-    $url = $this->boundedText($front, $back);
-    $this->sendGetToUrl($url);
-  }
-
-  /**
-   * <p>Treat the text found by invoking {@link #boundedText} as a URL, and sends it a POST request.</p>
-   */
-  public function boundedTextAsPostLink($front, $back, $fields=null, $options=array()) {
-    $url = $this->boundedText($front, $back);
-    $this->sendPostToUrlFields($url, $fields, $options);
-  }
-
-  /**
    * <p>Treat the text found as form elements and returns a hash representation of it.</p>
    */
   public function boundedTextAsFormInput($front, $back) {
@@ -145,6 +129,22 @@ class InkScrape {
       $elements_rep[$element_name] = $element_value;
     }
     return $elements_rep;
+  }
+
+  /**
+   * <p>Treat the text found by invoking {@link #boundedText} as a URL, and sends it a GET request.</p>
+   */
+  public function boundedTextAsGetLink($front, $back, $options=array()) {
+    $url = $this->boundedText($front, $back);
+    $this->sendGetToUrl($url);
+  }
+
+  /**
+   * <p>Treat the text found by invoking {@link #boundedText} as a URL, and sends it a POST request.</p>
+   */
+  public function boundedTextAsPostLink($front, $back, $fields=null, $options=array()) {
+    $url = $this->boundedText($front, $back);
+    $this->sendPostToUrlFields($url, $fields, $options);
   }
 }
 
