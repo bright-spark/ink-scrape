@@ -8,6 +8,9 @@ class Curler {
   protected $m_previousUrl;
   protected $m_currentUrl;
 
+  protected $response_headers;
+  protected $response_body;
+
   public function __construct($options=array()) {
     $this->options = $options;
     $this->m_previousUrl = '';
@@ -25,16 +28,20 @@ class Curler {
   }
 
   public function __curlCallbackHeader($ch, $header) {
+    $this->response_headers .= $header;
     return strlen($header);
   }
 
   public function __curlCallbackBody($ch, $body) {
+    $this->response_body .= $body;
     return strlen($body);
   }
 
   protected function validateParameters(&$options) {
     $this->m_previousUrl = $this->m_currentUrl;
     $this->m_currentUrl = $options[CURLOPT_URL];
+    $this->response_headers = '';
+    $this->response_body = '';
     $options[CURLOPT_HEADERFUNCTION] = array($this, '__curlCallbackHeader');
     $options[CURLOPT_WRITEFUNCTION] = array($this, '__curlCallbackBody');
   }
