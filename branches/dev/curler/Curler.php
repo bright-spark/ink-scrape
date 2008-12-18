@@ -1,5 +1,7 @@
 <?php
 
+require_once("RequestException");
+
 class Curler {
   public $options;
 
@@ -41,7 +43,7 @@ class Curler {
 
     $returnValue = curl_exec($ch);
     if(empty($returnValue)) {
-      curl_error($ch);
+      throw new RequestException("curl request returned empty value", curl_error($ch));
     }
     curl_close();
   }
