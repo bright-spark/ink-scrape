@@ -30,7 +30,7 @@ class InkScrape {
   }
 
   public function sendPostToUrlFields($url, $fields=array(), $options=array()) {
-    $this->curler->sendGetToUrl($url, $fields, $options);
+    $this->curler->sendPostToUrl($url, $fields, $options);
     $this->data = $this->curler->responseBody();
     $this->position = 0;
   }
