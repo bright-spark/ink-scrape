@@ -149,35 +149,23 @@ class InkScrape {
     } catch (UnmatchedBoundaryException $e) {
       throw new UnexpectedValueException("no <html> element found");
     }
-    $matches = array();
-    $ret = preg_match_all('/<meta [^>]+>/', $text, &$matches);
-    if($ret===false || $ret<=0) throw new UnexpectedValueException("no <meta> tags found");
-
-    $meta_arr = array();
-    foreach($matches[0] as $tag) {
-      $attr_arr=array();
-
-      $ret = preg_match('/http-equiv="([^"]+)"/', $tag, &$arr);
-      if(!($ret===false || $ret<=0)) {
-        $attr_arr["http-equiv"] = $arr[1];
-      }
-
-      $ret = preg_match('/content="([^"]+)"/', $tag, &$arr);
-      if(!($ret===false || $ret<=0)) {
-        $attr_arr["content"] = $arr[1];
-      }
-
-      array_push($meta_arr, $attr_arr);
+    try {
+      $meta_tags = Parsing::parseAllUnclosedTags($text, "meta");
+    } catch (NoTagNameFoundException $e) {
+      throw new UnexpectedValueException("no <meta> tags found");
     }
 
-    if(count($meta_arr)<=0) throw new UnexpectedValueException("no <meta> tags found");
+    //unlikely, but in case
+    if(empty($meta_arr)<=0) throw new UnexpectedValueException("no <meta> tags found");
+
     $found_refresh = false;
     $url;
-    foreach($meta_arr as $meta_tag) {
-      if(strtolower(trim($meta_tag["http-equiv"]))!="refresh") {
+    foreach($meta_tags as $meta_tag) {
+      $attrs = $meta_tag->attributes();
+      if(strtolower(trim($attrs["http-equiv"]))!="refresh") {
         continue;
       }
-      $ret = preg_match('/url\s*=\s*([^"]+)/', $meta_tag["content"], &$arr);
+      $ret = preg_match('/url\s*=\s*([^"]+)/', $attrs["content"], &$arr);
       if(!($ret===false || $ret<=0)) {
         $url = $arr[1];
         $found_refresh = true;
