@@ -12,15 +12,7 @@ class Parsing {
   const re_unclosedNamedTag = '/<(%s)(.+)\/?>/';
   const re_attributePair = '/\s*([^=]+)="([^"]+)"/';
 
-  public static function parseAllUnclosedTags($str) {
-    return self::__parseAllUnclosedNamedTags($str);
-  }
-
-  public static function parseAllNamedUnclosedTags($name, $str) {
-    return self::__parseAllUnclosedNamedTags($str, $name);
-  }
-
-  protected static function __parseAllUnclosedNamedTags($str, $name=null) {
+  public static function parseAllUnclosedTags($str, $name=null) {
     $re = !is_string($name) ? self::re_unclosedTagGeneral : sprintf(self::re_unclosedTagNamedGeneral, $name);
 
     $ret = preg_match_all($re, $str, $matches);
@@ -28,20 +20,12 @@ class Parsing {
 
     $tags = array();
     foreach($matches[0] as $tag_match) {
-      array_push($tags, self::parseNamedUnclosedTag($name, $tag_match));
+      array_push($tags, self::parseUnclosedTag($tag_match, $name));
     }
     return $tags;
   }
 
-  public static function parseNamedUnclosedTag($name, $str) {
-    return self::__parseUnclosedTagNamed($str, $name);
-  }
-
-  public static function parseUnclosedTag($str) {
-    return self::__parseUnclosedTagNamed($str);
-  }
-
-  protected static function __parseUnclosedTagNamed($str, $name=null) {
+  public static function parseUnclosedTag($str, $name=null) {
     $re = !is_string($name) ? re_unclosedTag : sprintf(self::re_unclosedNamedTag, $name);
 
     $ret = preg_match($re, $str, $matches);

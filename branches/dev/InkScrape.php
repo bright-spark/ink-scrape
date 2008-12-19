@@ -110,7 +110,7 @@ class InkScrape {
   public function boundedTextAsFormInput($front, $back) {
     $text = $this->boundedText($front, $back);
 
-    $tags = Parsing::parseAllNamedUnclosedTags("input", $text);
+    $tags = Parsing::parseAllUnclosedTags($text, "input");
 
     $elements_rep = array();
     foreach($tags as $tag) {
