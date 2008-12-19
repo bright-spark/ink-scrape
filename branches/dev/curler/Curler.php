@@ -45,11 +45,7 @@ class Curler {
     }
     if(array_key_exists(CURLOPT_POSTFIELDS, $options)) {
       if(is_array($options[CURLOPT_POSTFIELDS])) {
-        $fields_arr = array();
-        foreach($options[CURLOPT_POSTFIELDS] as $opt=>$val) {
-          array_push($fields_arr, "{$opt}={$val}");
-        }
-        $options[CURLOPT_POSTFIELDS] = implode("&", $fields_arr);
+        $options[CURLOPT_POSTFIELDS] = http_build_query($options[CURLOPT_POSTFIELDS]);
       }
     }
   }
