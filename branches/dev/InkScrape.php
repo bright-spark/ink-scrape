@@ -2,6 +2,7 @@
 
 include("bounds/ForwardBoundaryCheck.php");
 include("curler/Curler.php");
+include("parsing/Parsing.php");
 
 class InkScrape {
   public $curler;
@@ -109,24 +110,14 @@ class InkScrape {
   public function boundedTextAsFormInput($front, $back) {
     $text = $this->boundedText($front, $back);
 
-    $elements = array();
-    $ret = preg_match_all("/<input [^>]+>/", $text, &$elements);
-    if($ret===false || $ret<=0) throw new UnexpectedValueException("unable to find <input> elements");
+    $tags = Parsing::parseAllNamedUnclosedTags("input", $text);
 
     $elements_rep = array();
-    foreach($elements[0] as $element) {
-      $element_str;$element_name;$element_value;
-      $ret = preg_match('/name="([^"]+)"/', $element, &$element_str);
-      if($ret===false || $ret<=0) throw new UnexpectedValueException("unable to find 'name' attribute");
-      $element_name = $element_str[1];
-
-      $ret = preg_match('/value="([^"]+)"/', $element, &$element_str);
-      if($ret===false || $ret<=0) {
-        $element_value = "";
-      } else {
-        $element_value = $element_str[1];
+    foreach($tags as $tag) {
+      $attrs = $tag->attributes();
+      if(array_key_exists("name", $attrs)) {
+        $elements_rep[$attrs["name"]] = array_key_exists("value", $attrs) ? $attrs["value"] : "";
       }
-      $elements_rep[$element_name] = $element_value;
     }
     return $elements_rep;
   }
