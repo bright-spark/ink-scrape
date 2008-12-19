@@ -1,8 +1,8 @@
 <?php
 
-include("bounds/ForwardBoundaryCheck.php");
-include("curler/Curler.php");
-include("parsing/Parsing.php");
+include("lib/ForwardBoundaryCheck.php");
+include("lib/Curler.php");
+include("lib/Parsing.php");
 
 class InkScrape {
   public $curler;
