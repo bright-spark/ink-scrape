@@ -6,14 +6,14 @@ class NoAttributeFoundException extends Exception {}
 class NoTagNameFoundException extends Exception {}
 
 class Parsing {
-  const re_unclosedTagGeneral = '/<[^>]+\/?>/';
-  const re_unclosedTagNamedGeneral = '/<%s[^>]+\/?>/';
+  const re_allUnclosedTags = '/<[^>]+\/?>/';
+  const re_allUnclosedNamedTags = '/<%s[^>]+\/?>/';
   const re_unclosedTag = '/<([^\s]+)(.+)\/?>/';
   const re_unclosedNamedTag = '/<(%s)(.+)\/?>/';
   const re_attributePair = '/\s*([^=]+)="([^"]+)"/';
 
   public static function parseAllUnclosedTags($str, $name=null) {
-    $re = !is_string($name) ? self::re_unclosedTagGeneral : sprintf(self::re_unclosedTagNamedGeneral, $name);
+    $re = !is_string($name) ? self::re_allUnclosedTags : sprintf(self::re_allUnclosedNamedTags, $name);
 
     $ret = preg_match_all($re, $str, $matches);
     if($ret===false || $ret<=0) throw new NoTagNameFoundException("unable to find <".(empty($name) ? 'tag' : $name)."> elements");
