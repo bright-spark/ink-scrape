@@ -34,15 +34,20 @@ function login_ebay($p_user, $p_pwd, $p_cookie) {
   echo("done\n");
 
   //search login page for login form
-  $link = $scraper->boundedText(array(
-    '<form method="post" name="SignInForm" onsubmit="readFlash();setOptimCookie();" style="margin:0px"',
-    'action="'
-  ), array('"'));
+  $form_tag = $scraper->boundedTextAsForm(array(
+    '<div class="signinyukon-rcp">',
+    '<div class="signinyukon-n">',
+    '<div class="signinyukon-e">',
+    '<div class="signinyukon-w">',
+    '<div class="signinyukon-mid">'), array(
+    '<div class="signinyukon-s">',
+    '<div class="signinyukon-e">',
+    '<div class="signinyukon-w">'));
 
-  //get all the generated variables
-  $options = $scraper->boundedTextAsFormInput(array('>'), array(
-  '<button type="submit" tabindex="3" class="SIActBtn"><span class="btn"><span class="btn">',
-  '</form>'));
+  $attrs = $form_tag->attributes();
+
+  $link = $attrs["action"];
+  $options = $form_tag->inputs();
   $options["userid"] = $p_user;
   $options["pass"] = $p_pwd;
 

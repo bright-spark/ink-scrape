@@ -3,6 +3,7 @@
 include("lib/ForwardBoundaryCheck.php");
 include("lib/Curler.php");
 include("lib/Parsing.php");
+include("lib/FormTag.php");
 
 class InkScrape {
   public $curler;
@@ -110,16 +111,13 @@ class InkScrape {
   public function boundedTextAsForm($front, $back) {
     $text = $this->boundedText($front, $back);
 
-    $tags = Parsing::parseAllUnclosedTags($text, "input");
+    $form_tags = Parsing::parseAllClosedNamedTags($text, "form");
+    if(count($form_tags)>1) throw new UnexpectedValueException("expecting only one <form> match; multiple found");
 
-    $elements_rep = array();
-    foreach($tags as $tag) {
-      $attrs = $tag->attributes();
-      if(array_key_exists("name", $attrs)) {
-        $elements_rep[$attrs["name"]] = array_key_exists("value", $attrs) ? $attrs["value"] : "";
-      }
-    }
-    return $elements_rep;
+    $form_tag = $form_tags[0];
+    $form_tag = new FormTag($form_tag->attributes(), $form_tag->body());
+
+    return $form_tag;
   }
 
   /**

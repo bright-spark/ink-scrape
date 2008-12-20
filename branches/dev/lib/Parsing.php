@@ -12,6 +12,9 @@ class Parsing {
   const re_unclosedTag = '/<([^\s]+)(.+)\/?>/';
   const re_unclosedNamedTag = '/<(%s)(.+)\/?>/';
 
+  //closed tags
+  const re_closedNamedTags = '/<%s([^>]*)(?!\/)>(.*?)<\/%s>/s';
+
   //attributes
   const re_attributePair = '/\s*([^=]+)="([^"]+)"/';
 
@@ -44,6 +47,28 @@ class Parsing {
 
     $tag = new Tag($tag_name, $tag_attributes);
     return $tag;
+  }
+
+  public static function parseAllClosedNamedTags($str, $name) {
+    $re = sprintf(self::re_closedNamedTags, $name, $name);
+
+    $ret = preg_match_all($re, $str, $matches);
+    if($ret===false || $ret<=0) throw new NoTagNameFoundException("unable to find <".$name."> elements");
+
+    $tag_count = count($matches[0]);
+    $tags = array();
+    for($i=0;$i<$tag_count;$i++) {
+      try {
+        $tag_attributes = self::parseAttributes($matches[1][$i]);
+      } catch (NoAttributeFoundException $e) {
+        //no attributes found
+        $tag_attributes = array();
+      }
+      $tag = new Tag($name, $tag_attributes, $matches[2][$i]);
+      array_push($tags, $tag);
+    }
+
+    return $tags;
   }
 
   public static function parseAttributes($attr_str) {
