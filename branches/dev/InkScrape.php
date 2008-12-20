@@ -106,7 +106,8 @@ class InkScrape {
   }
 
   /**
-   * <p>Treat the text found as form elements and returns a hash representation of it.</p>
+   * <p>Treat the text found as a form and returns a <code>FormTag</code> representation of it.</p>
+   * @see FormTag
    */
   public function boundedTextAsForm($front, $back) {
     $text = $this->boundedText($front, $back);
