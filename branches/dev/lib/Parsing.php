@@ -6,10 +6,13 @@ class NoAttributeFoundException extends Exception {}
 class NoTagNameFoundException extends Exception {}
 
 class Parsing {
+  //unclosed tags
   const re_allUnclosedTags = '/<[^>]+\/?>/';
   const re_allUnclosedNamedTags = '/<%s[^>]+\/?>/';
   const re_unclosedTag = '/<([^\s]+)(.+)\/?>/';
   const re_unclosedNamedTag = '/<(%s)(.+)\/?>/';
+
+  //attributes
   const re_attributePair = '/\s*([^=]+)="([^"]+)"/';
 
   public static function parseAllUnclosedTags($str, $name=null) {
