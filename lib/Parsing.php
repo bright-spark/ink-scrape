@@ -36,15 +36,13 @@ class Parsing {
     if($ret===false || $ret<=0) throw new NoTagNameFoundException("unable to find <".(empty($name) ? 'tag' : $name)."> elements");
     $tag_name = $matches[1];
 
+    $tag_attributes = null;
     if(array_key_exists(2, $matches)) {
       try {
         $tag_attributes = self::parseAttributes($matches[2]);
       } catch (NoAttributeFoundException $e) {
         //no attributes found
-        $tag_attributes = null;
       }
-    } else {
-      $tag_attributes = null;
     }
 
     $tag = new Tag($tag_name, $tag_attributes);
@@ -64,7 +62,7 @@ class Parsing {
         $tag_attributes = self::parseAttributes($matches[1][$i]);
       } catch (NoAttributeFoundException $e) {
         //no attributes found
-        $tag_attributes = array();
+        $tag_attributes = null;
       }
       $tag = new Tag($name, $tag_attributes, $matches[2][$i]);
       array_push($tags, $tag);
