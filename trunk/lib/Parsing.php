@@ -58,11 +58,11 @@ class Parsing {
     $tag_count = count($matches[0]);
     $tags = array();
     for($i=0;$i<$tag_count;$i++) {
+      $tag_attributes = null;
       try {
         $tag_attributes = self::parseAttributes($matches[1][$i]);
       } catch (NoAttributeFoundException $e) {
         //no attributes found
-        $tag_attributes = null;
       }
       $tag = new Tag($name, $tag_attributes, $matches[2][$i]);
       array_push($tags, $tag);
