@@ -16,7 +16,7 @@ class Parsing {
   const re_closedNamedTags = '/<%s([^>]*)(?!\/)>(.*?)<\/%s>/s';
 
   //attributes
-  const re_attributePair = '/\s*([^=]+)="([^"]+)"/';
+  const re_attributePair = '/\s*([^=\s]+)\s*=\s*"([^"]+)"/';
 
   public static function parseAllUnclosedTags($str, $name=null) {
     $re = !is_string($name) ? self::re_allUnclosedTags : sprintf(self::re_allUnclosedNamedTags, $name);
