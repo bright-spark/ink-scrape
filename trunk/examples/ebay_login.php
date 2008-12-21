@@ -11,7 +11,7 @@ function login_ebay($p_user, $p_pwd, $p_cookie) {
 
   //useful if you want to see page output
   $scraper->curler->fileTrail = true;
-  $scraper->curler->fileTrailNamer = create_function('$str', 'return "curler/".md5($str).".html";');
+  $scraper->curler->fileTrailNamer = create_function('$str', 'return getenv("TMP")."/".md5($str).".html";');
 
   $scraper->curler->options[CURLOPT_SSL_VERIFYPEER]=false;
   $scraper->curler->options[CURLOPT_FOLLOWLOCATION]=true;
